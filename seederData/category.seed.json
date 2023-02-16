@@ -1,0 +1,30 @@
+[{
+    "nameOfCategory": "cong nghe",
+    "description": "Nothing",
+    "products": [{
+        "product": "63edb00f56bf223b448989bf"
+    }],
+"countOfProducts": 6,
+"images" : [{
+    "publicId" : "products/623ed8fb2054b479390a897a_ywa6vv",
+    "url" : "https://res.cloudinary.com/dr9tyxp1a/image/upload/v1648742373/products/623ed8fb2054b479390a897a_ywa6vv.jpg"
+}]
+},
+{
+    "nameOfCategory": "sinh hoat",
+    "description": "Nothing",
+    "products": [{
+        "product": "63edb00f56bf223b448989c2"
+    },
+    {
+        "product": "63edb00f56bf223b448989c5"
+    },
+    {
+        "product": "63edb00f56bf223b448989bf"
+    }],
+"countOfProducts": 6,
+"images" : [{
+    "publicId" : "products/623ed8fb2054b479390a897a_ywa6vv",
+    "url" : "https://res.cloudinary.com/dr9tyxp1a/image/upload/v1648742373/products/623ed8fb2054b479390a897a_ywa6vv.jpg"
+}]
+}]
