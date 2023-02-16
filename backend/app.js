@@ -16,8 +16,10 @@ app.use(fileUpload());
 dotenv.config({ path: "../configs.env" });
 
 const products = require("./routes/product.routes")
+const categories = require("./routes/category.routes")
 
 app.use("/api/v1", products);
+app.use("/api/v1", categories);
 
 app.use(middlewareErrorHandler);
 module.exports = app;
