@@ -1,0 +1,51 @@
+[{
+    "name": "Airpod pro",
+    "description": "Nothings to say",
+    "price": 12,
+    "images" : [{
+        "publicId" : "products/623ed8fb2054b479390a897a_ywa6vv",
+        "url" : "https://res.cloudinary.com/dr9tyxp1a/image/upload/v1648742373/products/623ed8fb2054b479390a897a_ywa6vv.jpg"
+    }],
+    "ratings": 4,
+    "stock": 3,
+    "numberOfReviews": 6,
+    "reviews": [],
+    "categories": [{
+        "category": "63d955755f42e891641dabfc"
+    }]
+},
+{
+    "name": "Airpod 2",
+    "description": "Nothings to say",
+    "price": 12,
+    "images" : [{
+        "publicId" : "products/623ed8fb2054b479390a897a_ywa6vv",
+        "url" : "https://res.cloudinary.com/dr9tyxp1a/image/upload/v1648742373/products/623ed8fb2054b479390a897a_ywa6vv.jpg"
+    }],
+    "ratings": 4,
+    "stock": 3,
+    "numberOfReviews": 6,
+    "reviews": [],
+    "categories": [{
+        "category": "63d955755f42e891641dabfc"
+    }]
+},
+{
+    "name": "Airpod",
+    "description": "Nothings to say",
+    "price": 12,
+    "images" : [{
+        "publicId" : "products/623ed8fb2054b479390a897a_ywa6vv",
+        "url" : "https://res.cloudinary.com/dr9tyxp1a/image/upload/v1648742373/products/623ed8fb2054b479390a897a_ywa6vv.jpg"
+    }],
+    "ratings": 4,
+    "stock": 3,
+    "numberOfReviews": 6,
+    "reviews": [],
+    "categories": [{
+        "category": "63d955755f42e891641dabfc"
+    },
+    {
+        "category": "63d955755f42e891641dabff"
+    }]
+}]
