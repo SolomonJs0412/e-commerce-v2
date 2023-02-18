@@ -25,11 +25,11 @@ const userSchema = new mongoose.Schema({
     avatar: {
         public_id: {
             type: String,
-            required: true,
+            default: "avatars/r0zwdt0gdbqrcnr7f5rq",
         },
         url: {
             type: String,
-            required: true,
+            default: "https://res.cloudinary.com/dr9tyxp1a/image/upload/v1673959957/avatars/r0zwdt0gdbqrcnr7f5rq.jpg",
         },
     },
     role: {
