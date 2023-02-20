@@ -89,5 +89,5 @@ userSchema.methods.getResetPasswordToken = function () {
 };
 
 const myDB = mongoose.connection.useDb('tiki');
-const productInfo = myDB.model('User', userSchema);
-module.exports = productInfo;
+const userInfo = myDB.model('User', userSchema);
+module.exports = userInfo;
