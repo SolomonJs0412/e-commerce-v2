@@ -9,7 +9,30 @@ const shopSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.ObjectId,
         ref: "User"
-    }
+    },
+    countOfProducts: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    products: [{
+        product: {
+            type: mongoose.Schema.ObjectId,
+            ref: "Product"
+        }
+    }],
+    images: [
+        {
+            publicId: {
+                type: String,
+                required: true
+            },
+            url: {
+                type: String,
+                required: true
+            }
+        }
+    ]
 });
 
 const myDB = mongoose.connection.useDb('tiki');
