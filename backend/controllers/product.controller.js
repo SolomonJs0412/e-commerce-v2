@@ -5,7 +5,12 @@ const errorHandler = require("../utils/errorHandler");
 
 
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-    const product = await Product.create(req.body);
+
+    try { var product = await Product.create(req.body); }
+    catch (err) {
+        console.error(err);
+    }
+
 
     res.status(201).json({
         success: true,

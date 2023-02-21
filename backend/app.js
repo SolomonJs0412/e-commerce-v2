@@ -19,11 +19,13 @@ const products = require("./routes/product.routes")
 const categories = require("./routes/category.routes")
 const auth = require("./routes/auth.routes")
 const admin = require("./routes/admin.routes")
+const shop = require("./routes/shop.routes")
 
 app.use("/api/v1", products);
 app.use("/api/v1", categories);
 app.use("/api/v1", auth);
 app.use("/api/v1", admin);
+app.use("/api/v1", shop);
 
 app.use(middlewareErrorHandler);
 module.exports = app;
