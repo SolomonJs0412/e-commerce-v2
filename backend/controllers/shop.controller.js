@@ -1,5 +1,8 @@
+const jwt = require("jsonwebtoken");
+
 const catchAsyncErrors = require("../expressHelper/catchAsyncErrors");
 const Shop = require("../models/shop.model");
+const User = require("../models/user.model");
 const Product = require("../models/product.model");
 const APIFeatures = require("../utils/apiFeatures");
 const errorHandler = require("../utils/errorHandler");
@@ -18,8 +21,13 @@ exports.newShop = catchAsyncErrors(async (req, res, next) => {
 
 exports.addNewProduct = catchAsyncErrors(async (req, res, next) => {
     const shop = await Shop.findById(req.params.id);
-    if (!shop) {
-        return next(new errorHandler("Not found shop", 404));
+
+    const { token } = req.cookies;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id);
+    if (user.id != shop.user) {
+        return next(new errorHandler("you not a owner", 403));
     }
 
     const product = Product.create(req.body);
