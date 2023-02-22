@@ -7,11 +7,23 @@ const Product = require("../models/product.model");
 const APIFeatures = require("../utils/apiFeatures");
 const errorHandler = require("../utils/errorHandler");
 
-const { createProduct } = require("./product.controller");
-
 exports.newShop = catchAsyncErrors(async (req, res, next) => {
     req.body.user = req.user.id;
+
+    const { token } = req.cookies;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
     const shop = await Shop.create(req.body);
+    const shopId = await Shop.findOne().sort({ _id: -1 }).exec();
+
+    if (user.shop.isCreated === false) {
+        user.shop.shop = shopId;
+        user.shop.isCreated = true;
+        user.save();
+    } else {
+        return next(new errorHandler("you have a shop", 403));
+    }
 
     res.status(201).json({
         success: true,
@@ -24,7 +36,6 @@ exports.addNewProduct = catchAsyncErrors(async (req, res, next) => {
 
     const { token } = req.cookies;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(decoded.id);
     if (user.id != shop.user) {
         return next(new errorHandler("you not a owner", 403));
@@ -43,5 +54,18 @@ exports.addNewProduct = catchAsyncErrors(async (req, res, next) => {
     res.status(201).json({
         success: true,
         productId
+    })
+});
+
+exports.getAllShopProducts = catchAsyncErrors(async (req, res, next) => {
+    const shop = await Shop.findById(req.params.id);
+
+    const listProducts = shop.products;
+    const countOfProducts = listProducts.length;
+
+    res.status(201).json({
+        success: true,
+        listProducts,
+        countOfProducts
     })
 });
