@@ -69,3 +69,40 @@ exports.getAllShopProducts = catchAsyncErrors(async (req, res, next) => {
         countOfProducts
     })
 });
+
+exports.getShopInfo = catchAsyncErrors(async (req, res, next) => {
+    const shop = await Shop.findById(req.params.id);
+    if (!shop) {
+        return next(new errorHandler("Not found valid shop", 404));
+    }
+
+    res.status(200).json({
+        success: true,
+        shop
+    })
+})
+
+exports.deleteShop = catchAsyncErrors(async (req, res, next) => {
+    const shop = await Shop.findById(req.params.id);
+    if (!shop) {
+        return next(new errorHandler("Not found valid shop", 404));
+    }
+
+    const { token } = req.cookies;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (user.id != shop.user) {
+        return next(new errorHandler("you not a owner", 403));
+    }
+    else {
+        user.shop.isCreated = false;
+        user.save();
+        shop.remove();
+    }
+
+    res.status(200).json({
+        success: true,
+        message: "Shop deleted successfully",
+    })
+});
