@@ -80,7 +80,8 @@ exports.getShopInfo = catchAsyncErrors(async (req, res, next) => {
         success: true,
         shop
     })
-})
+});
+
 
 exports.deleteShop = catchAsyncErrors(async (req, res, next) => {
     const shop = await Shop.findById(req.params.id);
