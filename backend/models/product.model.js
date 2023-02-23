@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema({
     },
     brand: {
         type: mongoose.Schema.ObjectId,
-        ref: "Brand",
+        ref: "Shop",
     },
     stock: {
         type: Number,
@@ -76,7 +76,16 @@ const productSchema = new mongoose.Schema({
                 required: true
             }
         }
-    ]
+    ],
+    shop: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
+    }
 });
 
 const myDB = mongoose.connection.useDb('tiki');
