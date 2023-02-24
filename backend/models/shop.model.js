@@ -10,11 +10,6 @@ const shopSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "User"
     },
-    countOfProducts: {
-        type: Number,
-        required: true,
-        default: 0
-    },
     products: [{
         product: {
             type: mongoose.Schema.ObjectId,

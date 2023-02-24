@@ -89,6 +89,16 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
         return next(new errorHandler("Product not found", 404));
     }
 
+    if (req.user.id == product.shop) {
+        await product.remove();
+    }
+    else if (req.user.role == "admin") {
+        await product.remove();
+    }
+    else {
+        return next(new errorHandler("Access denied", 403));
+    }
+
     await product.remove();
 
     res.status(200).json({
