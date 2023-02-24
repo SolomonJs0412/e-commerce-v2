@@ -40,8 +40,8 @@ exports.addNewProduct = catchAsyncErrors(async (req, res, next) => {
     if (user.id != shop.user) {
         return next(new errorHandler("you not a owner", 403));
     }
-
-    const product = Product.create(req.body);
+    req.body.shop = req.user.id;
+    const product = await Product.create(req.body);
 
     const productId = await Product.findOne().sort({ _id: -1 }).exec();
     shop.products.push(productId);
@@ -82,24 +82,56 @@ exports.getShopInfo = catchAsyncErrors(async (req, res, next) => {
     })
 });
 
-
-exports.deleteShop = catchAsyncErrors(async (req, res, next) => {
-    const shop = await Shop.findById(req.params.id);
+exports.updateShop = catchAsyncErrors(async (req, res, next) => {
+    let shop = await Shop.findById(req.params.id);
     if (!shop) {
         return next(new errorHandler("Not found valid shop", 404));
     }
 
-    const { token } = req.cookies;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
-
-    if (user.id != shop.user) {
-        return next(new errorHandler("you not a owner", 403));
+    if (req.user.id == shop.user) {
+        shop = await Shop.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
+    }
+    else if (req.user.role == "admin") {
+        shop = await Shop.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
     }
     else {
+        return next(new errorHandler(" You have not permission to access this resource"));
+    }
+
+    res.status(200).json({
+        success: true,
+        message: "Shop has been update",
+        shop
+    });
+});
+
+exports.deleteShop = catchAsyncErrors(async (req, res, next) => {
+    let shop = await Shop.findById(req.params.id);
+    const user = await User.findById(req.user.id);
+    if (!shop) {
+        return next(new errorHandler("Not found valid shop", 404));
+    }
+
+    if (req.user.id == shop.user) {
         user.shop.isCreated = false;
         user.save();
         shop.remove();
+    }
+    else if (req.user.role == "admin") {
+        user.shop.isCreated = false;
+        user.save();
+        shop.remove();
+    }
+    else {
+        return next(new errorHandler("you not a owner", 403));
     }
 
     res.status(200).json({
