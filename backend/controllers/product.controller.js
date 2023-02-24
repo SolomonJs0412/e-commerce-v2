@@ -6,11 +6,12 @@ const errorHandler = require("../utils/errorHandler");
 
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 
+    req.body.shop = req.user.id;
+
     try { var product = await Product.create(req.body); }
     catch (err) {
         console.error(err);
     }
-
 
     res.status(201).json({
         success: true,
@@ -57,11 +58,23 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
         return next(new errorHandler("Product not found", 404));
     }
 
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false,
-    });
+    if (req.user.id == product.shop) {
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
+    }
+    else if (req.user.role == "admin") {
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
+    }
+    else {
+        return next(new errorHandler("Access denied", 403));
+    }
 
     res.status(200).json({
         success: true,
