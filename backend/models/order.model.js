@@ -89,5 +89,5 @@ const orderSchema = new mongoose.Schema({
 });
 
 const myDB = mongoose.connection.useDb('tiki');
-orderInfo = myDB.model('Order', shopSchema);
+orderInfo = myDB.model('Order', orderSchema);
 module.exports = orderInfo;
