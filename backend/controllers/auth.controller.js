@@ -50,6 +50,7 @@ exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getUserInfo = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const user = await User.findById(req.user.id);
     res.status(200).json({
         success: true,

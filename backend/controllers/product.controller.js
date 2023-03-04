@@ -5,7 +5,7 @@ const errorHandler = require("../utils/errorHandler");
 
 
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     req.body.shop = req.user.id;
 
     try { var product = await Product.create(req.body); }
@@ -20,6 +20,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const resPerPage = 10;
     const countProducts = await Product.countDocuments();
     const apiFeatures = new APIFeatures(Product.find(), req.query).search().filter();
@@ -39,6 +40,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProduct = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const product = await Product.findById(req.params.id);
 
     if (!product) {
@@ -52,6 +54,7 @@ exports.getProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     let product = await Product.findById(req.params.id);
 
     if (!product) {
@@ -83,6 +86,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const product = await Product.findById(req.params.id);
 
     if (!product) {
