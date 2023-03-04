@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const catchAsyncErrors = require("../expressHelper/catchAsyncErrors");
 const errorHandler = require("../utils/errorHandler")
+const Order = require("../models/order.model");
 
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
     const users = await User.find();
@@ -55,5 +56,20 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         user,
+    });
+});
+
+//admin get orders
+exports.adminGetOrders = catchAsyncErrors(async (req, res, next) => {
+
+    var orders = await Order.find({ user: req.params.id });
+
+    if (!orders) {
+        return next(new errorHandler(404, "No such order"));
+    }
+
+    res.status(200).json({
+        success: true,
+        orders
     });
 });

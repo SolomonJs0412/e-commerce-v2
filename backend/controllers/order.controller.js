@@ -1,5 +1,6 @@
 const Order = require("../models/order.model")
 const catchAsyncErrors = require("../expressHelper/catchAsyncErrors")
+const ErrorHandler = require("../utils/errorHandler")
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     const {
@@ -28,10 +29,12 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-    const order = await Order.findById(req.params.id).populate(
-        "user",
-        "name email"
-    );
+
+    const order = await Order.findById(req.params.id)
+
+    if (order.user != req.user.id) {
+        return next(new ErrorHandler("Not have not permission to access this resource", 403));
+    }
 
     if (!order) {
         return next(new ErrorHandler("no order found with this id ", 404));
@@ -45,6 +48,10 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 
 exports.myOrders = catchAsyncErrors(async (req, res, next) => {
     const orders = await Order.find({ user: req.user.id });
+
+    if (!orders) {
+        return next(new ErrorHandler("no orders found with this id ", 404));
+    }
 
     res.status(200).json({
         success: true,
