@@ -3,6 +3,7 @@ const catchAsyncErrors = require("../expressHelper/catchAsyncErrors")
 const ErrorHandler = require("../utils/errorHandler")
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const {
         orderItems,
         shippingInfo,
@@ -30,6 +31,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const order = await Order.findById(req.params.id)
 
     if (order.user != req.user.id) {
@@ -47,6 +49,7 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.myOrders = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
     const orders = await Order.find({ user: req.user.id });
 
     if (!orders) {
