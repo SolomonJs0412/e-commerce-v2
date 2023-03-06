@@ -61,3 +61,19 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
         orders,
     });
 });
+
+exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
+    console.info(`[${new Date().toLocaleString()}] Incoming ${req.method}${req.originalUrl} request from ${req.rawHeaders[0]}${req.rawHeaders[1]}`);
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+        return next(new ErrorHandler("no order found with this id ", 404));
+    }
+
+    await order.remove();
+
+    res.status(200).json({
+        success: true,
+        order,
+    });
+});
