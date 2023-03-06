@@ -11,10 +11,13 @@ const {
     deleteUser,
     adminGetOrders } = require("../controllers/admin.controller");
 
+const { deleteOrder } = require("../controllers/order.controller");
+
 router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles("admin"), getAllUsers);
 router.route("/admin/user/:id")
     .get(isAuthenticatedUser, authorizeRoles("admin"), getUserDetailsById)
     .put(isAuthenticatedUser, authorizeRoles("admin"), updateUser)
     .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
 router.route("/admin/user/:id/orders").get(isAuthenticatedUser, authorizeRoles("admin"), adminGetOrders)
+router.route("/admin/order/:id").delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder)
 module.exports = router;
