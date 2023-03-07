@@ -9,7 +9,8 @@ const {
     getUserDetailsById,
     updateUser,
     deleteUser,
-    adminGetOrders } = require("../controllers/admin.controller");
+    adminGetOrder,
+    getAllOrder = require("../controllers/admin.controller");
 
 const { deleteOrder } = require("../controllers/order.controller");
 
@@ -20,4 +21,5 @@ router.route("/admin/user/:id")
     .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
 router.route("/admin/user/:id/orders").get(isAuthenticatedUser, authorizeRoles("admin"), adminGetOrders)
 router.route("/admin/order/:id").delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder)
+router.route("/admin/orders").get(isAuthenticatedUser, authorizeRoles("admin"), getAllOrder)
 module.exports = router;
