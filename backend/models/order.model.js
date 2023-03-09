@@ -16,7 +16,7 @@ const orderSchema = new mongoose.Schema({
             quantity: {
                 type: Number,
                 required: true,
-                default: "test information"
+                default: 1
             },
             image: {
                 type: String,
@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema({
             price: {
                 type: Number,
                 required: true,
-                default: "test information"
+                default: 0
             },
             product: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -59,7 +59,7 @@ const orderSchema = new mongoose.Schema({
     orderStatus: {
         type: String,
         required: true,
-        default: "Processing ",
+        default: "Processing",
     },
     deliveryAt: {
         type: Date,
