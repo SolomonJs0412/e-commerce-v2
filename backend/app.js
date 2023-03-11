@@ -21,6 +21,7 @@ const auth = require("./routes/auth.routes")
 const admin = require("./routes/admin.routes")
 const shop = require("./routes/shop.routes")
 const order = require("./routes/order.routes")
+const payment = require("./routes/payment.routes")
 
 app.use("/api/v1", products);
 app.use("/api/v1", categories);
@@ -28,6 +29,7 @@ app.use("/api/v1", auth);
 app.use("/api/v1", admin);
 app.use("/api/v1", shop);
 app.use("/api/v1", order);
+app.use("/api/v1", payment);
 
 app.use(middlewareErrorHandler);
 module.exports = app;
